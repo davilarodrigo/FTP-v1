@@ -25,11 +25,13 @@ namespace Server
         {
             TcpListener tcpListener = new TcpListener(IPAddress.Any, 5004);
             tcpListener.Start();
+            updateUI("Listening");
 
             while (true)
             {//es un loop para que se puedan hacer varias conexiones, cuando una conexion termina empieza a buscar otra
                 TcpClient client = tcpListener.AcceptTcpClient();
                 Thread tcpHandlerThread = new Thread(new ParameterizedThreadStart(tcpHandler));
+                updateUI("Connected!");
                 tcpHandlerThread.Start(client);
             }
 
@@ -39,10 +41,11 @@ namespace Server
         {
             TcpClient mCLient = (TcpClient)client;
             NetworkStream stream = mCLient.GetStream();
-            while (true)
-            {
-
-            }
+            byte[] message = new byte[1024];
+            stream.Read(message, 0, message.Length);
+            updateUI("New Message = " + Encoding.ASCII.GetString(message));
+            stream.Close();
+            mCLient.Close();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -55,6 +58,18 @@ namespace Server
             Thread tcpServerRunThread = new Thread(new ThreadStart(TcpServerRun));
 
             tcpServerRunThread.Start();
+        }
+
+               
+        private void updateUI(string s)
+        {
+            Func<int> del = delegate ()
+            {
+                textBox1.AppendText(s + System.Environment.NewLine);
+                return 0;
+            };
+            Invoke(del);
+
         }
     }
 }
