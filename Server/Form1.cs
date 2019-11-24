@@ -40,10 +40,29 @@ namespace Server
         private void tcpHandler(object client)
         {
             TcpClient mCLient = (TcpClient)client;
-            NetworkStream stream = mCLient.GetStream();
-            byte[] message = new byte[1024];
-            stream.Read(message, 0, message.Length);
-            updateUI("New Message = " + Encoding.ASCII.GetString(message));
+            NetworkStream stream;
+            string messageString="";
+            byte[] message;
+
+            while (true)
+            {
+                message = new byte[1024];
+
+                stream = mCLient.GetStream();
+                stream.Read(message, 0, message.Length);
+
+                messageString = Encoding.ASCII.GetString(message);
+                updateUI("New Message => " + messageString);
+
+
+                if (messageString.Length == 4)
+                {
+                    break;
+
+                }
+            }
+
+            updateUI("Conexion Finalizada");
             stream.Close();
             mCLient.Close();
         }
