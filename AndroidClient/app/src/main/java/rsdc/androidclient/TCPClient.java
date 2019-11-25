@@ -3,89 +3,56 @@ package rsdc.androidclient;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class TCPClient extends AsyncTask<Void,Void,Void> {
+public class TCPClient {
 
-    String dstAddress;
-    int dstPort;
-    String response="";
-    MessagesInterface msg;
-    ByteArrayOutputStream byteArrayOutputStream;
+    private String ip="192.168.1.5";
+    private int port=5004;
+    private MessagesInterface messagesInterface;
+    private Socket socket;
 
-    public TCPClient(String addr, int port, MessagesInterface messagesInterface){
-        dstAddress=addr;
-        dstPort=port;
-        msg=messagesInterface;
+    private PrintWriter out;
 
-        ///
+    public TCPClient( MessagesInterface messagesInterface){
+        this.messagesInterface=messagesInterface;
+    }
+
+    public void connect(String ip, int port){
+        this.ip=ip;
+        this.port=port;
+        new Thread(new ClientThread()).start();
+    }
+
+
+    public void send(String message){
+
+        out.println(message);
+        out.flush();
 
     }
 
-    @Override
-    protected Void doInBackground(Void... arg0){
-        Socket socket = null;
+    class ClientThread implements Runnable{
+        @Override
+        public void run(){
+            try {
+                socket=new Socket(ip,port);
 
-        try {
-            socket=new Socket(dstAddress,dstPort);
+                try {
+                    out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
 
-            byteArrayOutputStream = new ByteArrayOutputStream(1024);
-            byte[] buffer = new byte[1024];
+                }catch (IOException e){messagesInterface.toast("IOException (TCPClient) " + e.toString());}
 
-            int bytesRead;
-            InputStream inputStream = socket.getInputStream();
+            }catch (IOException e){messagesInterface.toast("IOException (ClientThread) " + e.toString());}
 
-            while ((bytesRead = inputStream.read(buffer)) != -1){
-                byteArrayOutputStream.write(buffer,0,bytesRead);
-
-            }
-
-            //codigo para el input... completar mas tarde
-        }catch (UnknownHostException e){
-            msg.toast("UnknownHostException"+e.toString());
-        }catch (IOException e){
-            msg.toast("IOException"+e.toString());
-        }finally {
-            if (socket!=null){
-                try{
-                    socket.close();
-                }catch (IOException e){
-                    msg.toast("???");
-                }
-            }
         }
-    return null;}
-
-    public void send(String str){
-
-
     }
-
-    //////////////////////////////////////
-/*
-    private String sentence;
-    private String Modifiedsentence;
-
-    private BufferedReader bufferedReader;
-    private PrintWriter printWriter;
-    private DataOutputStream outputStream;
-
-    private Socket clientSocket;
-    private MessagesInterface msgUI;
-
-    public void connect(String _ip, int _port)  {
-
-    }
-
-    public void send (String message) {
-
-    }
-
-*/
 }

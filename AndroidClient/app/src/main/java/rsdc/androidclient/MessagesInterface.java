@@ -15,15 +15,11 @@ public class MessagesInterface extends AppCompatActivity {
 
     ListView listMessages;
     TCPClient tcpClient;
-    boolean connected;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final MessagesInterface msg = this;
 
         Button btnConnect = findViewById(R.id.btnConnect);
         Button btnSend = findViewById(R.id.btnSend);
@@ -32,9 +28,7 @@ public class MessagesInterface extends AppCompatActivity {
         final EditText txtIp = findViewById(R.id.txtIp);
         final EditText txtMessage = findViewById(R.id.txtMessage);
 
-        connected=false;
-        listMessages = findViewById(R.id.listMessages);
-
+        tcpClient=new TCPClient(this);
 
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,10 +37,8 @@ public class MessagesInterface extends AppCompatActivity {
                 String ip = txtIp.getText().toString();
                 int port = Integer.parseInt(txtPort.getText().toString());
 
-                        //tcpClient.connect(txtIp.getText().toString(), Integer.parseInt(txtPort.getText().toString()));
-                TCPClient client = new TCPClient(ip,port,msg);
+                tcpClient.connect(ip,port);
 
-                client.execute();
 
             }
         });
@@ -54,8 +46,9 @@ public class MessagesInterface extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String message = txtMessage.getText().toString();
                 txtMessage.setText("");
-                //tcpClient.send(txtMessage.getText().toString());
+                tcpClient.send(message);
             }
         });
 
