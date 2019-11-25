@@ -38,8 +38,6 @@ public class MessagesInterface extends AppCompatActivity {
                 int port = Integer.parseInt(txtPort.getText().toString());
 
                 tcpClient.connect(ip,port);
-
-
             }
         });
 
@@ -55,10 +53,8 @@ public class MessagesInterface extends AppCompatActivity {
     }
 
     public void toast(String text){
-        Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG);
+        Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
     }
 
-    public void addMessage(String message){
-      //listMessages.
-    }
+
 }
