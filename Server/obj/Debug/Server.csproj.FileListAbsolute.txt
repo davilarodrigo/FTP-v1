@@ -8,3 +8,13 @@ E:\RepositoriosGit\FTP-v1\Server\obj\Debug\Server.csproj.GenerateResource.cache
 E:\RepositoriosGit\FTP-v1\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
 E:\RepositoriosGit\FTP-v1\Server\obj\Debug\Server.exe
 E:\RepositoriosGit\FTP-v1\Server\obj\Debug\Server.pdb
+E:\Git Repositorios\otros\FTP-v1\Server\bin\Debug\Server.exe.config
+E:\Git Repositorios\otros\FTP-v1\Server\bin\Debug\Server.exe
+E:\Git Repositorios\otros\FTP-v1\Server\bin\Debug\Server.pdb
+E:\Git Repositorios\otros\FTP-v1\Server\obj\Debug\Server.csprojAssemblyReference.cache
+E:\Git Repositorios\otros\FTP-v1\Server\obj\Debug\Server.Form1.resources
+E:\Git Repositorios\otros\FTP-v1\Server\obj\Debug\Server.Properties.Resources.resources
+E:\Git Repositorios\otros\FTP-v1\Server\obj\Debug\Server.csproj.GenerateResource.cache
+E:\Git Repositorios\otros\FTP-v1\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+E:\Git Repositorios\otros\FTP-v1\Server\obj\Debug\Server.exe
+E:\Git Repositorios\otros\FTP-v1\Server\obj\Debug\Server.pdb

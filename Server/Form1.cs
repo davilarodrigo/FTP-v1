@@ -44,22 +44,17 @@ namespace Server
             string messageString="";
             byte[] message;
 
-            while (true)
-            {
+            while (true) //el while permite que se reciban varios mensajes por conexion (no estaba originalmente)
+            {            //el cliente c# no esta preparado para mandar varios mensajes por conexion, pero el cliente android si
                 message = new byte[1024];
-
+                
                 stream = mCLient.GetStream();
-                stream.Read(message, 0, message.Length);
+                if (stream.Read(message, 0, message.Length) == 0) break;
+                //si el read retorna valor cero, quiere decir que no hay conexion (era tan facil...)
 
                 messageString = Encoding.ASCII.GetString(message);
                 updateUI("New Message => " + messageString);
-
-
-                if (messageString.Length == 4)
-                {
-                    break;
-
-                }
+                                               
             }
 
             updateUI("Conexion Finalizada");
